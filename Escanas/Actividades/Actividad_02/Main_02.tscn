@@ -1,0 +1,151 @@
+[gd_scene load_steps=21 format=3 uid="uid://bu276xl0wi6gf"]
+
+[ext_resource type="Texture2D" uid="uid://eqhe7nabcmg4" path="res://Arte/arena.png" id="1_1lyub"]
+[ext_resource type="Script" uid="uid://qpm74ahwqu3s" path="res://Logica/Actividades/Act_2/Player_02.gd" id="2_04hv1"]
+[ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="3_04hv1"]
+[ext_resource type="Texture2D" uid="uid://brcbbkltq10kj" path="res://Arte/Sanson_idle_00.png" id="3_7v771"]
+[ext_resource type="Texture2D" uid="uid://cstm05168uyob" path="res://Arte/Sanson_00.png" id="4_v3a6p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1xit"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(0, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3j8pw"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(62, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12kuk"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(124, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyom6"]
+atlas = ExtResource("3_7v771")
+region = Rect2(0, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_te3mc"]
+atlas = ExtResource("3_7v771")
+region = Rect2(62, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17wc5"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(0, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_235mo"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(62, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fpvr"]
+atlas = ExtResource("3_04hv1")
+region = Rect2(124, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtijx"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(0, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttcco"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(0, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwvuv"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(0, 124, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knosy"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(62, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khifp"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(62, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sciu"]
+atlas = ExtResource("4_v3a6p")
+region = Rect2(62, 124, 62, 62)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7v771"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1xit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3j8pw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12kuk")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyom6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_te3mc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17wc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_235mo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fpvr")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtijx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttcco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwvuv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knosy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khifp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sciu")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[node name="main_02" type="Node2D"]
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(320, 0)
+
+[node name="Fondo" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_1lyub")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(160, 129)
+script = ExtResource("2_04hv1")
+metadata/_edit_group_ = true
+
+[node name="player_sprite" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_7v771")
+animation = &"fall"
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_top = 0
+limit_bottom = 180

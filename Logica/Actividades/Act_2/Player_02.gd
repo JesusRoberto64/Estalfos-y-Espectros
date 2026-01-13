@@ -1,0 +1,45 @@
+extends CharacterBody2D
+
+var speed = 250.0 # velocidad de izquierda derecha
+var direction = 1.0 # la direccion que mira nuestro personaje
+var gravity = 30.0 
+var jump_force = 500.0
+
+var anim_mov : Vector2 = Vector2.LEFT # variable para pasar a process
+@onready var sprite = $player_sprite # referecnia a animatedsprite2D
+
+func _physics_process(_delta):
+	var move = Vector2.ZERO
+	
+	if Input.is_action_pressed('ui_right'):
+		move.x = 1.0
+	elif Input.is_action_pressed('ui_left'):
+		move.x = -1.0
+	
+	anim_mov = move
+	direction = direction if move.x == 0.0 else move.x
+	
+	velocity.y += gravity
+	if Input.is_action_just_pressed('ui_accept') and position.y == 135.0:
+		velocity.y = -jump_force
+	
+	velocity.x = move.x * speed
+	move_and_slide()
+	
+	# Limite de suelo TEMPORAL
+	position.y = min(135.0, position.y)
+
+func _process(_delta):
+	sprite.flip_h = true if direction > 0.0 else false
+	
+	if position.y >= 135.0:
+		if anim_mov == Vector2.ZERO:
+			sprite.play("idle")
+		else:
+			sprite.play("walk")
+	else:
+		if velocity.y != 0.0:
+			if velocity.y > 0.0:
+				sprite.play("fall")
+			else:
+				sprite.play("jump")
