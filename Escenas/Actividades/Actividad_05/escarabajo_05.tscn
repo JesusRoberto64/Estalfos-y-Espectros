@@ -1,0 +1,92 @@
+[gd_scene load_steps=13 format=3 uid="uid://d2a7d77hrgv82"]
+
+[ext_resource type="Script" uid="uid://bdy70ph11c60r" path="res://Logica/Actividades/Act_5/escarabajo_05.gd" id="1_b245m"]
+[ext_resource type="Texture2D" uid="uid://ce5iho6vjlfwr" path="res://Arte/escarabajo_00.png" id="2_t8yip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_383gw"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xnpum"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhiqg"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2nih"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lavb2"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mxjf"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkl0c"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4b72m"]
+atlas = ExtResource("2_t8yip")
+region = Rect2(0, 96, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jhiqg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_383gw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xnpum")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhiqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2nih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lavb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mxjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkl0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4b72m")
+}],
+"loop": false,
+"name": &"desapear",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x2nih"]
+radius = 6.0
+
+[node name="Escarabajo" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_b245m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jhiqg")
+autoplay = "default"
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("CircleShape2D_x2nih")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_finished"]

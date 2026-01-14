@@ -8,6 +8,8 @@ var jump_force = 550.0
 var anim_mov : Vector2 = Vector2.LEFT # variable para pasar a process
 @onready var sprite = $player_sprite # referecnia a animatedsprite2D
 
+signal get_beetle
+
 func _physics_process(_delta):
 	var move = Vector2.ZERO
 	
@@ -25,7 +27,9 @@ func _physics_process(_delta):
 	
 	velocity.x = move.x * speed
 	move_and_slide()
-
+	
+	if position.y >= 500.0:
+		get_tree().reload_current_scene()
 
 func _process(_delta):
 	sprite.flip_h = true if direction > 0.0 else false
