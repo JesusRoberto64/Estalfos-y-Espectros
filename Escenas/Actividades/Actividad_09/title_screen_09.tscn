@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch1e7fftw26sk"]
+
+[ext_resource type="Script" uid="uid://rpnm8atqvwmx" path="res://Logica/Actividades/Act_9/title_screen_09.gd" id="1_dkqgt"]
+[ext_resource type="Texture2D" uid="uid://b747do0qrg5ba" path="res://Arte/title_scree_00.png" id="1_k5j2p"]
+[ext_resource type="PackedScene" uid="uid://tauv0muy660o" path="res://Escenas/Actividades/Actividad_10/main_10.tscn" id="2_1u61x"]
+
+[node name="Title_Screen_09" type="Node2D"]
+script = ExtResource("1_dkqgt")
+level = ExtResource("2_1u61x")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+texture = ExtResource("1_k5j2p")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Comenzar" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = 3.0
+offset_right = 43.5
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+focus_neighbor_bottom = NodePath("../Salir")
+text = "Comenzar"
+
+[node name="Salir" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = 45.0
+offset_right = 44.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_top = NodePath("../Comenzar")
+text = "Salir"
