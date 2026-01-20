@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dk2bqgilu607k"]
+[gd_scene load_steps=11 format=3 uid="uid://dk2bqgilu607k"]
 
 [ext_resource type="Texture2D" uid="uid://brer8jyrg17p4" path="res://Arte/Estalfo_00.png" id="1_63hps"]
+[ext_resource type="Script" uid="uid://dtttwregynqn2" path="res://Logica/Actividades/Act_10/estalfo_10.gd" id="1_ldm1y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crafx"]
 atlas = ExtResource("1_63hps")
@@ -47,15 +48,32 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a860x"]
 radius = 6.0
-height = 46.0
+height = 42.0
 
-[node name="Estalfo" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ldm1y"]
+height = 38.0
+
+[node name="Estalfo_10" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_ldm1y")
+metadata/_edit_horizontal_guides_ = [27.0]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q5pdj")
 animation = &"walk"
-frame_progress = 0.14619605
+frame = 1
+frame_progress = 0.16338752
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_a860x")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_ldm1y")
+debug_color = Color(0.8431017, 0.2941401, 0.6200547, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_body_entered"]

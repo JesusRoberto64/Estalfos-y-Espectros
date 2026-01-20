@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rpnm8atqvwmx" path="res://Logica/Actividades/Act_9/title_screen_09.gd" id="1_dkqgt"]
 [ext_resource type="Texture2D" uid="uid://b747do0qrg5ba" path="res://Arte/title_scree_00.png" id="1_k5j2p"]
-[ext_resource type="PackedScene" uid="uid://tauv0muy660o" path="res://Escenas/Actividades/Actividad_10/main_10.tscn" id="2_1u61x"]
+[ext_resource type="PackedScene" uid="uid://cxumfr1vswpk0" path="res://Escenas/Actividades/Actividad_13/main_13.tscn" id="2_1u61x"]
 
 [node name="Title_Screen_09" type="Node2D"]
 script = ExtResource("1_dkqgt")

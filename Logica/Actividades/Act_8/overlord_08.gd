@@ -20,7 +20,4 @@ func get_beetle() -> void:
 func succes(_body):
 	succes_lab.show()
 	Player.succes()
-	#Escudo.get_child(0).play("succes")
-	#Escudo.set_deferred('monitoring', false)
 	Escudo.succes()
-	
