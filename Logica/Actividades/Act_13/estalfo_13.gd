@@ -15,6 +15,8 @@ func _ready():
 	$CollisionShape2D.disabled = true
 	$Area2D.monitoring = false
 	sprite.play("rise")
+	
+	sprite.flip_h = true if direction > 0.0 else false
 
 func _physics_process(delta):
 	if destroyed or is_rising: return

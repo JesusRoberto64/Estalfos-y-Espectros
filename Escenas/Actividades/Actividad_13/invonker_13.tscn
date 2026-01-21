@@ -176,3 +176,8 @@ metadata/_edit_lock_ = true
 [node name="Pool" type="Node2D" parent="."]
 position = Vector2(0, -29)
 metadata/_edit_lock_ = true
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="ScreenNotifier" to="." method="_on_screen_entered"]
+[connection signal="screen_exited" from="ScreenNotifier" to="." method="_on_screen_exited"]
