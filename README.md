@@ -205,7 +205,7 @@ Pensado para:
 
 ---
 
-# 📜 Licencia
+# 📜 Licencia MIT
 
 Este proyecto es de uso educativo.
 Puede ser usado como material de aprendizaje, referencia o base para proyectos personales.
