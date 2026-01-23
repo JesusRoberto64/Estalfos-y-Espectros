@@ -1,257 +1,211 @@
-🎮 Godot – Proyecto Educativo con Actividades Guiadas
+# 🎮 Godot – Proyecto Educativo con Actividades Guiadas
 
-Este repositorio contiene un proyecto educativo en Godot Engine, diseñado como una serie de actividades prácticas organizadas por carpetas, donde cada una desarrolla una mecánica específica de un videojuego 2D.
+Este repositorio contiene un **proyecto educativo en Godot Engine**, diseñado como una serie de **actividades prácticas organizadas por carpetas**, donde cada una desarrolla una mecánica específica de un videojuego 2D.
 
-El objetivo es que estudiantes o personas autodidactas aprendan Godot paso a paso, desde lo más básico hasta sistemas más avanzados como enemigos, portales, UI y balance de dificultad.
+El objetivo es que estudiantes o personas autodidactas aprendan **Godot paso a paso**, desde lo más básico hasta sistemas más avanzados como enemigos, portales, UI y balance de dificultad.
 
-Cada carpeta representa una actividad independiente, con recursos, escenas y scripts necesarios para completar el ejercicio.
+Cada carpeta representa una **actividad independiente**, con recursos, escenas y scripts necesarios para completar el ejercicio.
 
-🧠 Estructura General del Proyecto
+---
+
+## 📦 Requisitos
+
+* Descargar **Godot Engine (versión recomendada: Godot 4.x)**
+* Tener conocimientos básicos de computación (no se requiere experiencia previa en programación)
+* Recursos gráficos incluidos o descargables según el taller
+
+---
+
+## 🧠 Estructura General del Proyecto
 
 El proyecto está organizado en carpetas para mantener el contenido ordenado:
 
-ARTE → Sprites, animaciones e imágenes
+* **ARTE** → Sprites, animaciones e imágenes
+* **LÓGICA** → Scripts y código
+* **ESCENAS** → Niveles, UI y escenas jugables
 
-LÓGICA → Scripts y código
+Cada **actividad** incluye su propio avance funcional del juego.
 
-ESCENAS → Niveles, UI y escenas jugables
+---
 
-Cada actividad incluye su propio avance funcional del juego.
+# 📁 Estructura del proyecto
 
-🏁 Introducción
-Actividades iniciales
+### 🟢 Introducción
 
-Bienvenida e introducción al proyecto
+**Introducción y bienvenida al taller**
 
-Jugar una demostración del ejercicio final
+* Bienvenida general
+* Demostración del ejercicio final
+* Instalación de Godot Engine
+* Descarga de recursos gráficos
+* Preparación del entorno de trabajo
 
-Descargar Godot Engine
+---
 
-Descargar recursos gráficos para el taller
+## 🔵 Conocer el motor Godot Engine
 
-🔵 Conocer el motor Godot Engine
+* Introducción a la interfaz de Godot
+* Organización de carpetas:
 
-Introducción a la interfaz de Godot
+  * `ARTE`
+  * `LOGICA`
+  * `ESCENAS`
+* Importación de arte
+* Explicación de nodos y escenas
+* Creación de la primera escena
+* Creación de nodos:
 
-Organización de carpetas:
+  * `CharacterBody2D`
+  * `AnimatedSprite2D`
+* Animación **idle**
+* Prueba de escena
 
-ARTE
+---
 
-LOGICA
+# 🧩 Actividades
 
-ESCENAS
+## 🟡 Actividad 1: Movimiento
 
-Importación de arte
+* Configuración de resolución de ventana
+* Animación de caminar
+* Introducción al código
+* Movimiento izquierda/derecha
+* Cámara
+* Fondo con scroll infinito
 
-Explicación de nodos y escenas
+## 🟡 Actividad 2: Salto
 
-Creación de la primera escena
+* Animación de salto
+* Lógica de salto
+* Ajuste de física
+* Personalización del salto
 
-Creación de nodos:
+## 🟡 Actividad 3: Terreno
 
-CharacterBody2D
+* `TileMapLayer`
+* Colisiones en tiles
+* Construcción del nivel
+* Colisiones del jugador
+* Diseño libre del nivel
 
-AnimatedSprite2D
+## 🟡 Actividad 4: Coleccionables
 
-Animación idle
+* `Area2D`
+* Colisiones
+* `AnimatedSprite2D`
+* Desaparición al recolectar
+* Sistema de rejilla
+* Nodo padre de coleccionables
 
-Prueba de escena
+## 🟡 Actividad 5: Contadores (UI)
 
-🧩 Actividades
-🟡 Actividad 1: Movimiento
+* `CanvasLayer`
+* `Label`
+* Icono de coleccionable
+* Script Overlord
+* Sistema de conteo
+* Comunicación entre nodos
 
-Configuración de resolución de ventana
+## 🟡 Actividad 6: Hazard (peligros)
 
-Animación de caminar
+* Áreas de daño
+* Sprites
+* Reinicio de escena
+* Condición de perder
+* Caída al abismo
 
-Introducción al código
+## 🟡 Actividad 7: Meta (final del nivel)
 
-Movimiento izquierda/derecha
+* Área de meta
+* Animaciones
+* Estado de victoria
+* UI de éxito
+* Conexión con Overlord
 
-Cámara
+## 🟡 Actividad 8: Portal / Niveles
 
-Fondo con scroll infinito
+* Duplicación de niveles
+* Sistema de niveles
+* Script singleton
+* Variable `current_level`
+* Sistema de cambio de nivel
 
-🟡 Actividad 2: Salto
+## 🟡 Actividad 9: Pantalla de título
 
-Animación de salto
+* Escena principal
+* Botones de iniciar y salir
+* Señales
+* Menú principal
 
-Lógica de salto
+## 🟡 Actividad 10: Enemigos
 
-Ajuste de física
+* `CharacterBody2D`
+* Animaciones
+* Colisiones
+* IA básica
+* Diseño de nivel con enemigos
 
-Personalización del salto
+## 🟡 Actividad 11: Ataque
 
-🟡 Actividad 3: Terreno
+* Animaciones de ataque
+* Áreas de golpe
+* Sistema de combate
 
-TileMapLayer
+## 🟡 Actividad 12: Destrucción de enemigos
 
-Colisiones en tiles
+* Animación de daño
+* Eliminación de enemigos
+* Sistema de daño al jugador
+* Hurt system
 
-Construcción del nivel
+## 🟡 Actividad 13: Spawner de enemigos
 
-Colisiones del jugador
+* Nodo spawner
+* Marcadores de posición
+* Generación dinámica de enemigos
 
-Diseño libre del nivel
+## 🟡 Actividad 14: Balanceo de dificultad
 
-🟡 Actividad 4: Coleccionables
+* Playtesting
+* Feedback de jugadores
+* Ajustes de dificultad
+* Diseño de experiencia
 
-Area2D
+## 🟡 Actividad 15: Pause
 
-Colisiones
+* Escena de pausa
+* Script de pausa
+* Integración en niveles
 
-AnimatedSprite2D
+---
 
-Desaparición al recolectar
-
-Sistema de rejilla
-
-Nodo padre de coleccionables
-
-🟡 Actividad 5: Contadores (UI)
-
-CanvasLayer
-
-Label
-
-Icono de coleccionable
-
-Script Overlord
-
-Sistema de conteo
-
-Comunicación entre nodos
-
-🟡 Actividad 6: Hazard (peligros)
-
-Áreas de daño
-
-Sprites
-
-Reinicio de escena
-
-Condición de perder
-
-Caída al abismo
-
-🟡 Actividad 7: Meta (final del nivel)
-
-Área de meta
-
-Animaciones
-
-Estado de victoria
-
-UI de éxito
-
-Conexión con Overlord
-
-🟡 Actividad 8: Portal / Niveles
-
-Duplicación de niveles
-
-Sistema de niveles
-
-Script singleton
-
-Variable current_level
-
-Sistema de cambio de nivel
-
-🟡 Actividad 9: Pantalla de título
-
-Escena principal
-
-Botones de iniciar y salir
-
-Señales
-
-Menú principal
-
-🟡 Actividad 10: Enemigos
-
-CharacterBody2D
-
-Animaciones
-
-Colisiones
-
-IA básica
-
-Diseño de nivel con enemigos
-
-🟡 Actividad 11: Ataque
-
-Animaciones de ataque
-
-Áreas de golpe
-
-Sistema de combate
-
-🟡 Actividad 12: Destrucción de enemigos
-
-Animación de daño
-
-Eliminación de enemigos
-
-Sistema de daño al jugador
-
-Hurt system
-
-🟡 Actividad 13: Spawner de enemigos
-
-Nodo spawner
-
-Marcadores de posición
-
-Generación dinámica de enemigos
-
-🟡 Actividad 14: Balanceo de dificultad
-
-Playtesting
-
-Feedback de jugadores
-
-Ajustes de dificultad
-
-Diseño de experiencia
-
-🟡 Actividad 15: Pause
-
-Escena de pausa
-
-Script de pausa
-
-Integración en niveles
-
-🎯 Objetivo del proyecto
+# 🎯 Objetivo del proyecto
 
 Este repositorio no busca solo enseñar Godot, sino enseñar:
 
-🧱 Arquitectura de proyectos
+* 🧱 Arquitectura de proyectos
+* 🧠 Pensamiento de diseño de juegos
+* 🎮 Lógica de gameplay
+* 🖼️ Integración arte + código
+* 🔁 Sistemas reutilizables
+* 🧩 Escalabilidad de proyectos
 
-🧠 Pensamiento de diseño de juegos
+---
 
-🎮 Lógica de gameplay
-
-🖼️ Integración arte + código
-
-🔁 Sistemas reutilizables
-
-🧩 Escalabilidad de proyectos
-
-👥 Enfoque educativo
+# 👥 Enfoque educativo
 
 Pensado para:
 
-Talleres
+* Talleres
+* Clubes de desarrollo
+* Autoaprendizaje
+* Educación independiente
+* Formación autodidacta
+* Introducción a carreras creativas-tecnológicas
 
-Clubes de desarrollo
+---
 
-Autoaprendizaje
+# 📜 Licencia
 
-Educación independiente
-
-Formación autodidacta
-
-Introducción a carreras creativas-tecnológicas
+Este proyecto es de uso educativo.
+Puede ser usado como material de aprendizaje, referencia o base para proyectos personales.
