@@ -1,23 +1,26 @@
 extends CharacterBody2D
+# Creamos una logica de estados para tenener modos de en nuestro jugador.
+enum STATE {SUCCES, MOVE, FREEZE} # Declaramos este enum con la lista de estados
+var cur_state = STATE.MOVE # Declaramos variable para alojar ese estado
 
-enum STATE {SUCCES, MOVE, FREEZE}
-var cur_state = STATE.MOVE
-
-var speed = 180.0 # velocidad de izquierda derecha
-var direction = 1.0 # la direccion que mira nuestro personaje
+var speed = 180.0 
+var direction = 1.0 
 var gravity = 30.0 
 var jump_force = 550.0
 
-var anim_mov : Vector2 = Vector2.LEFT # variable para pasar a process
-@onready var sprite = $player_sprite # referecnia a animatedsprite2D
+var anim_mov : Vector2 = Vector2.LEFT 
+@onready var sprite = $player_sprite 
 
 signal get_beetle
 
+func _ready() -> void:
+	add_to_group("Player")
+
 func _physics_process(_delta):
 	var move = Vector2.ZERO
-	
-	match cur_state:
-		STATE.MOVE:
+	# Usamos la estructura con un match para procesar bloques de logica separados.
+	match cur_state: # ponemos un match que revise el valor de cur_state(estado actual)
+		STATE.MOVE: # mientras estemos en el STATE.MOVE(estado de movimiento)
 			if Input.is_action_pressed('ui_right'):
 				move.x = 1.0
 			elif Input.is_action_pressed('ui_left'):
@@ -32,19 +35,20 @@ func _physics_process(_delta):
 			
 			velocity.x = move.x * speed
 			move_and_slide()
-		STATE.SUCCES:
+		STATE.SUCCES:# mientras estamos en el estado al tocar la meta.
 			velocity.y += gravity
-			if is_on_floor():
+			if is_on_floor(): # cuando toque el suelo celebrara el personaje
 				# Celebration
 				sprite.play("succes")
-				cur_state = STATE.FREEZE
+				cur_state = STATE.FREEZE # cambiamos de estado para no viciar el ciclo
 			move_and_slide()
 	
 	if position.y >= 500.0:
 		get_tree().reload_current_scene()
 
 func _process(_delta):
-	if cur_state == STATE.FREEZE: return
+	# return termina el proceso que no ocurra ninguan otra animación
+	if cur_state == STATE.FREEZE: return 
 	sprite.flip_h = true if direction > 0.0 else false
 	
 	if is_on_floor():
@@ -59,7 +63,7 @@ func _process(_delta):
 			else:
 				sprite.play("jump")
 
-func succes():
-	cur_state = STATE.SUCCES
-	velocity = Vector2.ZERO
-	anim_mov = Vector2.ZERO
+func succes(): # Esta funcion se llamara cuando se toque la meta
+	cur_state = STATE.SUCCES # Cambiamos de estado
+	velocity = Vector2.ZERO # Reseteamos velocidad
+	anim_mov = Vector2.ZERO # Receteamos animación

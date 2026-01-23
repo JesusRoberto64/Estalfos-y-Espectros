@@ -1,14 +1,17 @@
 extends CharacterBody2D
-
-var speed = 180.0 # velocidad de izquierda derecha
-var direction = 1.0 # la direccion que mira nuestro personaje
+# Ponemos en grupo al player para que el Hazard lo reconozca.
+var speed = 180.0 
+var direction = 1.0 
 var gravity = 30.0 
 var jump_force = 550.0
 
-var anim_mov : Vector2 = Vector2.LEFT # variable para pasar a process
-@onready var sprite = $player_sprite # referecnia a animatedsprite2D
+var anim_mov : Vector2 = Vector2.LEFT 
+@onready var sprite = $player_sprite 
 
 signal get_beetle
+
+func _ready() -> void: # Añadir a grupo de jugador para ser reconocido por los Hazards
+	add_to_group("Player") # Añadimos al grupo Player
 
 func _physics_process(_delta):
 	var move = Vector2.ZERO

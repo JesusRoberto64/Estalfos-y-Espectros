@@ -3,7 +3,7 @@ extends Node2D
 enum MODE { INFINITE, LIMITED }
 @export var cur_mode = MODE.INFINITE
 
-var max_enemy : int = 3
+@export var max_enemy : int = 3
 var enemy = preload("res://Escenas/Actividades/Actividad_13/estalfo_13.tscn")
 @onready var pool = $Pool
 

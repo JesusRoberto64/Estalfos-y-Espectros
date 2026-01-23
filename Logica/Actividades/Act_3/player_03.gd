@@ -1,12 +1,12 @@
 extends CharacterBody2D
-
-var speed = 250.0 # velocidad de izquierda derecha
-var direction = 1.0 # la direccion que mira nuestro personaje
+# En esta ocacion ya vamos a usar tiles para la colisión del suelo
+var speed = 250.0 
+var direction = 1.0 
 var gravity = 30.0 
 var jump_force = 500.0
 
-var anim_mov : Vector2 = Vector2.LEFT # variable para pasar a process
-@onready var sprite = $player_sprite # referecnia a animatedsprite2D
+var anim_mov : Vector2 = Vector2.LEFT 
+@onready var sprite = $player_sprite 
 
 func _physics_process(_delta):
 	var move = Vector2.ZERO
@@ -20,7 +20,8 @@ func _physics_process(_delta):
 	direction = direction if move.x == 0.0 else move.x
 	
 	velocity.y += gravity
-	if Input.is_action_just_pressed('ui_accept') and is_on_floor():
+	# Ahora usamos is_on_floor() para saber si nuestro jugador esta tocando el suelo
+	if Input.is_action_just_pressed('ui_accept') and is_on_floor(): # Agregamos is_on_floor()
 		velocity.y = -jump_force
 	
 	velocity.x = move.x * speed
@@ -29,7 +30,7 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	sprite.flip_h = true if direction > 0.0 else false
-	
+	 # Lo cambiamos por la función is_on_floor(), para saber si el personaje toca el suelo
 	if is_on_floor():
 		if anim_mov == Vector2.ZERO:
 			sprite.play("idle")

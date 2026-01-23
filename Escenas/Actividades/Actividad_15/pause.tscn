@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://yyyq7wc8tkyq"]
+
+[ext_resource type="Script" uid="uid://cy78xh1477csi" path="res://Logica/Actividades/Act_15/pause_15.gd" id="1_hxcs6"]
+
+[node name="Pause" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_hxcs6")
+main_menu = "res://Escenas/Actividades/Actividad_09/title_screen_09.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.2784314)
+metadata/_edit_lock_ = true
+
+[node name="continue" type="Button" parent="."]
+offset_left = 112.0
+offset_top = 48.0
+offset_right = 198.0
+offset_bottom = 79.0
+focus_neighbor_bottom = NodePath("../restart")
+theme_override_font_sizes/font_size = 10
+text = "Continuar"
+
+[node name="restart" type="Button" parent="."]
+offset_left = 112.0
+offset_top = 96.0
+offset_right = 196.0
+offset_bottom = 127.0
+focus_neighbor_top = NodePath("../continue")
+focus_neighbor_bottom = NodePath("../main_menu")
+theme_override_font_sizes/font_size = 10
+text = "Repetir"
+
+[node name="main_menu" type="Button" parent="."]
+offset_left = 112.0
+offset_top = 144.0
+offset_right = 196.0
+offset_bottom = 175.0
+focus_neighbor_top = NodePath("../restart")
+theme_override_font_sizes/font_size = 10
+text = "Menu"
+
+[connection signal="pressed" from="continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="main_menu" to="." method="_on_main_menu_pressed"]
