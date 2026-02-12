@@ -11,7 +11,7 @@ var jump_force = 550.0
 var anim_mov : Vector2 = Vector2.LEFT 
 @onready var sprite = $player_sprite 
 
-signal get_beetle
+signal get_beetle # Nombre del coleccionable
 
 func _ready() -> void:
 	add_to_group("Player")
