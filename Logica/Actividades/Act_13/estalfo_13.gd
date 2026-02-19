@@ -6,13 +6,15 @@ var direction = -1.0
 var hp : int = 3
 var destroyed = false
 var hurt_timer = 0.0
+var is_hurt = false
 var is_rising = true
 
 @onready var sprite = $AnimatedSprite2D
+@onready var col_shape = $CollisionShape2D
 
 func _ready():
 	sprite.connect("animation_finished", on_animation_finished)
-	$CollisionShape2D.disabled = true
+	col_shape.disabled = true
 	$Area2D.monitoring = false
 	sprite.play("rise")
 	
@@ -63,7 +65,7 @@ func hurt(dammage: int = 1) -> void:
 func on_animation_finished() -> void:
 	if sprite.animation == "rise":
 		is_rising = false
-		$CollisionShape2D.disabled = false
+		col_shape.disabled = false
 		$Area2D.monitoring = true
 		return
 	queue_free()

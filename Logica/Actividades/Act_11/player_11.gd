@@ -5,8 +5,14 @@ var cur_state = STATE.MOVE
 
 var speed = 180.0 
 var direction = 1.0 
-var gravity = 30.0 
-var jump_force = 550.0
+# Jump logica
+var gravity_jump = 29.0 
+var gravity_fall = 30.0
+var jump_force = 525.0
+var jump_max_counter = 1
+var jump_counter = 0
+var jump_air_force = 325.0
+var jump_move = 0
 
 var anim_mov : Vector2 = Vector2.LEFT 
 @onready var sprite : AnimatedSprite2D = $player_sprite 
@@ -29,18 +35,27 @@ func _physics_process(_delta):
 	
 	match cur_state:
 		STATE.MOVE:
-			if Input.is_action_pressed('ui_right'):
-				move.x = 1.0
-			elif Input.is_action_pressed('ui_left'):
-				move.x = -1.0
+			move.x = Input.get_axis('ui_left', 'ui_right')
 			
 			anim_mov = move
-			direction = direction if move.x == 0.0 else move.x
+			direction = direction if move.x == 0.0 else sign(move.x)
+			
 			hit_boxes.scale.x = -direction
 			
+			var gravity = gravity_jump if velocity.y < 0.0 else gravity_fall
 			velocity.y += gravity
-			if Input.is_action_just_pressed('jump') and is_on_floor():
+			
+			var jumped = Input.is_action_just_pressed('jump')
+			if jumped and is_on_floor():
 				velocity.y = -jump_force
+				jump_move = move.x
+			
+			if not is_on_floor() and jumped and jump_counter > 0:
+				velocity.y = -jump_air_force
+				jump_counter -= 1
+				jump_move = move.x
+			elif is_on_floor() and jump_counter != jump_max_counter:
+				jump_counter = jump_max_counter
 			
 			# Lógica de ataque
 			# Si acabamos de presionar el botón de ataque.
@@ -51,7 +66,7 @@ func _physics_process(_delta):
 					punch_hitbox.disabled = true # Desactivamos la caja de colisión
 					if punch_pressed: # Si acabamos de presionar el botón de ataque
 						sprite.play("punch") # Reproducimos la animación de golpe
-						sprite.frame = 2 # para adelantar la animación y ser mas rapido
+						sprite.frame = 0 # para adelantar la animación y ser mas rapido
 						punch_hitbox.disabled = false # Activamos la colisión
 					move.x = 0.0 # Paramos el movimiento
 			
@@ -61,10 +76,18 @@ func _physics_process(_delta):
 				sprite.play("punch")# reproducimos animación
 				punch_hitbox.disabled = false # activamos la colisión
 			
-			velocity.x = move.x * speed
+			
+			if is_on_floor():
+				velocity.x = move.x * speed
+			else:
+				if jump_move == 0.0:
+					velocity.x = move.x * speed * 0.25
+				else:
+					velocity.x = jump_move * speed
+			
 			move_and_slide()
 		STATE.SUCCES:
-			velocity.y += gravity
+			velocity.y += gravity_fall
 			if is_on_floor():
 				sprite.play("succes")
 				cur_state = STATE.FREEZE
@@ -92,6 +115,8 @@ func _process(_delta):
 
 func on_animation_finished() -> void: # Cuando la animación termina
 	if sprite.animation == "punch": # Si acabón la animación de punch
+		sprite.play("punch_end")
+	elif sprite.animation == "punch_end":
 		punch_hitbox.disabled = true # desactivamos la colisión de golpe
 		is_attacking = false # cancelamos el estado de golpe
 
