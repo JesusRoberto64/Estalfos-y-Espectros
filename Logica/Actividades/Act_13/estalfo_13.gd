@@ -6,16 +6,18 @@ var direction = -1.0
 var hp : int = 3
 var destroyed = false
 var hurt_timer = 0.0
+var hurt_timer_max = 0.3
 var is_hurt = false
 var is_rising = true
 
 @onready var sprite = $AnimatedSprite2D
 @onready var col_shape = $CollisionShape2D
+@onready var hazard_area = $Area2D
 
 func _ready():
 	sprite.connect("animation_finished", on_animation_finished)
 	col_shape.disabled = true
-	$Area2D.monitoring = false
+	hazard_area.monitoring = false
 	sprite.play("rise")
 	
 	sprite.flip_h = true if direction > 0.0 else false
@@ -47,6 +49,7 @@ func _process(_delta):
 		sprite.play("hurt")
 	elif is_on_floor():
 		sprite.play("walk")
+		hazard_area.monitoring = true
 	
 
 func _on_area_body_entered(body):
@@ -56,16 +59,16 @@ func _on_area_body_entered(body):
 func hurt(dammage: int = 1) -> void:
 	if destroyed or is_rising: return
 	hp -= dammage
-	hurt_timer = 0.15
+	hurt_timer = hurt_timer_max
+	hazard_area.set_deferred('monitoring', false)
 	if hp <= 0:
 		sprite.play("destruction")
 		destroyed = true
-		$Area2D.set_deferred('monitoring', false)
 
 func on_animation_finished() -> void:
 	if sprite.animation == "rise":
 		is_rising = false
 		col_shape.disabled = false
-		$Area2D.monitoring = true
+		hazard_area.monitoring = true
 		return
 	queue_free()

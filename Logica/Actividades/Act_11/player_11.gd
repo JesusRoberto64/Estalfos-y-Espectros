@@ -21,6 +21,7 @@ signal get_beetle
 
 @onready var hit_boxes = $Hit_Boxes # referencia a las cajas de colision
 @onready var punch_hitbox = $Hit_Boxes/punch # a la caja de golpe
+@onready var knee_hitbox = $Hit_Boxes/knee
 var is_attacking = false # Para saber si el personajes esta atacando.
 
 func _ready():
@@ -58,23 +59,21 @@ func _physics_process(_delta):
 				jump_counter = jump_max_counter
 			
 			# Lógica de ataque
-			# Si acabamos de presionar el botón de ataque.
 			var punch_pressed = Input.is_action_just_pressed("punch")
 			
-			if is_attacking: # Bloque de lógica cuando está atacando.
-				if is_on_floor(): # Si estamos el suelo
-					punch_hitbox.disabled = true # Desactivamos la caja de colisión
-					if punch_pressed: # Si acabamos de presionar el botón de ataque
-						sprite.play("punch") # Reproducimos la animación de golpe
-						sprite.frame = 0 # para adelantar la animación y ser mas rapido
-						punch_hitbox.disabled = false # Activamos la colisión
-					move.x = 0.0 # Paramos el movimiento
+			if is_attacking:
+				move = attack_handle(punch_pressed, move)
 			
 			# Lógica de compuerta para cambiar el esto de golpe
 			if punch_pressed and not is_attacking: # si presionamos el botón y no estamos atacando
-				is_attacking = true # cerramos la compuerta
-				sprite.play("punch")# reproducimos animación
-				punch_hitbox.disabled = false # activamos la colisión
+				set_attack(move)
+				#is_attacking = true 
+				#if is_on_floor():
+					#sprite.play("punch")
+					#punch_hitbox.disabled = false
+				#else:
+					#sprite.play("knee")
+					#knee_hitbox.disabled = false
 			
 			
 			if is_on_floor():
@@ -112,6 +111,35 @@ func _process(_delta):
 				sprite.play("fall")
 			else:
 				sprite.play("jump")
+
+func set_attack(_move: Vector2):
+	is_attacking = true 
+	if is_on_floor():
+		sprite.play("punch")
+		punch_hitbox.disabled = false
+	else:
+		sprite.play("knee")
+		knee_hitbox.disabled = false
+	
+	pass
+
+func attack_handle(_punch_pressed : bool, _move: Vector2) -> Vector2:
+	if is_on_floor():
+		match sprite.animation:
+			"punch":
+				punch_hitbox.disabled = true 
+				if _punch_pressed: 
+					sprite.play("punch")
+					sprite.frame = 0 
+					punch_hitbox.disabled = false 
+				_move.x = 0.0
+				return _move
+			"punch_end":
+				return Vector2(0.0, _move.y)
+			"knee":
+				knee_hitbox.disabled = true
+				is_attacking = false
+	return _move
 
 func on_animation_finished() -> void: # Cuando la animación termina
 	if sprite.animation == "punch": # Si acabón la animación de punch

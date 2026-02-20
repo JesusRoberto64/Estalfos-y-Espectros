@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://brgetf3e7rgt8"]
+[gd_scene load_steps=32 format=3 uid="uid://brgetf3e7rgt8"]
 
 [ext_resource type="Script" uid="uid://bhndfgtt2ibk4" path="res://Logica/Actividades/Act_11/player_11.gd" id="1_cgfde"]
 [ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="2_xlwfv"]
 [ext_resource type="Texture2D" uid="uid://brcbbkltq10kj" path="res://Arte/Sanson_idle_00.png" id="3_7v5l4"]
 [ext_resource type="Texture2D" uid="uid://cstm05168uyob" path="res://Arte/Sanson_00.png" id="4_b21vg"]
+[ext_resource type="Texture2D" uid="uid://0j3od0pbymnh" path="res://Arte/Sanson_rodillazo_00.png" id="4_xlwfv"]
 [ext_resource type="Texture2D" uid="uid://dgpq3i0fd8l7r" path="res://Arte/Sanson_succes_00.png" id="5_ohiiw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1xit"]
@@ -36,6 +37,14 @@ region = Rect2(62, 0, 62, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fpvr"]
 atlas = ExtResource("2_xlwfv")
+region = Rect2(124, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7v5l4"]
+atlas = ExtResource("4_xlwfv")
+region = Rect2(62, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b21vg"]
+atlas = ExtResource("4_xlwfv")
 region = Rect2(124, 0, 62, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3pd83"]
@@ -125,6 +134,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_7v5l4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b21vg")
+}],
+"loop": false,
+"name": &"knee",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_3pd83")
 }, {
 "duration": 1.0,
@@ -186,6 +206,9 @@ height = 50.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ejooy"]
 size = Vector2(39.5, 8)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohiiw"]
+size = Vector2(16, 27)
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
 floor_constant_speed = true
@@ -195,7 +218,9 @@ metadata/_edit_group_ = true
 
 [node name="player_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_74tf5")
-animation = &"punch"
+animation = &"knee"
+frame = 1
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -213,4 +238,10 @@ collision_mask = 2
 position = Vector2(-9.75, -9)
 shape = SubResource("RectangleShape2D_ejooy")
 disabled = true
-debug_color = Color(0.75003827, 0.28226438, 0.89998174, 0.41960785)
+debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
+
+[node name="knee" type="CollisionShape2D" parent="Hit_Boxes"]
+position = Vector2(-18, 4.5)
+shape = SubResource("RectangleShape2D_ohiiw")
+disabled = true
+debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
