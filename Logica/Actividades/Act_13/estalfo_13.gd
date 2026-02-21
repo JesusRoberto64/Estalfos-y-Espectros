@@ -14,6 +14,9 @@ var is_rising = true
 @onready var col_shape = $CollisionShape2D
 @onready var hazard_area = $Area2D
 
+var blink_timer = 0.0
+var blink_timer_max = 0.05
+
 func _ready():
 	sprite.connect("animation_finished", on_animation_finished)
 	col_shape.disabled = true
@@ -21,6 +24,7 @@ func _ready():
 	sprite.play("rise")
 	
 	sprite.flip_h = true if direction > 0.0 else false
+	sprite.modulate.a = 0.6
 
 func _physics_process(delta):
 	if destroyed or is_rising: return
@@ -41,8 +45,14 @@ func _physics_process(delta):
 		if collision.get_collider() is TileMapLayer:
 			direction = direction * -1.0
 
-func _process(_delta):
-	if destroyed or is_rising: return
+func _process(delta):
+	if destroyed or is_rising: 
+		# animacion cuando esta levantandose
+		blink_timer -= delta
+		if blink_timer < 0.0:
+			blink_timer = blink_timer_max
+			sprite.modulate.a *= -1.0
+		return
 	sprite.flip_h = true if direction > 0.0 else false
 	
 	if hurt_timer > 0.0:
@@ -50,7 +60,6 @@ func _process(_delta):
 	elif is_on_floor():
 		sprite.play("walk")
 		hazard_area.monitoring = true
-	
 
 func _on_area_body_entered(body):
 	if body.is_in_group("Player"):
@@ -70,5 +79,6 @@ func on_animation_finished() -> void:
 		is_rising = false
 		col_shape.disabled = false
 		hazard_area.monitoring = true
+		sprite.modulate.a = 1.0
 		return
 	queue_free()
