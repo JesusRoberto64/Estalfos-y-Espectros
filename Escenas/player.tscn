@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://brgetf3e7rgt8"]
+[gd_scene load_steps=33 format=3 uid="uid://brgetf3e7rgt8"]
 
 [ext_resource type="Script" uid="uid://bhndfgtt2ibk4" path="res://Logica/Actividades/Act_11/player_11.gd" id="1_cgfde"]
 [ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="2_xlwfv"]
@@ -46,6 +46,10 @@ region = Rect2(62, 0, 62, 62)
 [sub_resource type="AtlasTexture" id="AtlasTexture_b21vg"]
 atlas = ExtResource("4_xlwfv")
 region = Rect2(124, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlwfv"]
+atlas = ExtResource("4_b21vg")
+region = Rect2(248, 124, 62, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3pd83"]
 atlas = ExtResource("4_b21vg")
@@ -136,12 +140,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7v5l4")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_b21vg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlwfv")
 }],
 "loop": false,
 "name": &"knee",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -155,7 +162,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"punch",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,7 +214,7 @@ height = 50.0
 size = Vector2(39.5, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohiiw"]
-size = Vector2(16, 27)
+size = Vector2(21, 27)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
@@ -219,7 +226,7 @@ metadata/_edit_group_ = true
 [node name="player_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_74tf5")
 animation = &"knee"
-frame = 1
+frame = 2
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -241,7 +248,7 @@ disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
 
 [node name="knee" type="CollisionShape2D" parent="Hit_Boxes"]
-position = Vector2(-18, 4.5)
+position = Vector2(-20.5, 8.5)
 shape = SubResource("RectangleShape2D_ohiiw")
 disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)

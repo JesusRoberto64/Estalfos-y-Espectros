@@ -1,14 +1,15 @@
 extends CharacterBody2D
 # Vamos a agregar la logica de golpe para el player
-enum STATE {SUCCES, MOVE, FREEZE}
+enum STATE {SUCCES, MOVE, FREEZE, HURT}
 var cur_state = STATE.MOVE
 
 var speed = 180.0 
 var direction = 1.0 
 # Jump logica
 var gravity_jump = 29.0 
-var gravity_fall = 30.0
-var jump_force = 525.0
+var gravity_fall = 33.0
+var jump_force = 390.0
+var jump_impulse = 12.0
 var jump_max_counter = 1
 var jump_counter = 0
 var jump_air_force = 325.0
@@ -24,6 +25,10 @@ signal get_beetle
 @onready var knee_hitbox = $Hit_Boxes/knee
 var is_attacking = false # Para saber si el personajes esta atacando.
 
+@export var hp = 10
+var hurt_timer = 0.35
+var recover_timer = 0.25
+
 func _ready():
 	add_to_group("Player")
 	# se conecta animation_finished para cuando la animación termina
@@ -33,7 +38,6 @@ func _ready():
 
 func _physics_process(_delta):
 	var move = Vector2.ZERO
-	
 	match cur_state:
 		STATE.MOVE:
 			move.x = Input.get_axis('ui_left', 'ui_right')
@@ -41,20 +45,25 @@ func _physics_process(_delta):
 			anim_mov = move
 			direction = direction if move.x == 0.0 else sign(move.x)
 			
-			hit_boxes.scale.x = -direction
+			if not is_attacking:
+				hit_boxes.scale.x = -direction
 			
 			var gravity = gravity_jump if velocity.y < 0.0 else gravity_fall
 			velocity.y += gravity
 			
 			var jumped = Input.is_action_just_pressed('jump')
+			
 			if jumped and is_on_floor():
 				velocity.y = -jump_force
 				jump_move = move.x
+			elif Input.is_action_pressed("jump"):
+				velocity.y -= jump_impulse
 			
 			if not is_on_floor() and jumped and jump_counter > 0:
 				velocity.y = -jump_air_force
 				jump_counter -= 1
 				jump_move = move.x
+				is_attacking = false
 			elif is_on_floor() and jump_counter != jump_max_counter:
 				jump_counter = jump_max_counter
 			
@@ -67,25 +76,24 @@ func _physics_process(_delta):
 			# Lógica de compuerta para cambiar el esto de golpe
 			if punch_pressed and not is_attacking: # si presionamos el botón y no estamos atacando
 				set_attack(move)
-				#is_attacking = true 
-				#if is_on_floor():
-					#sprite.play("punch")
-					#punch_hitbox.disabled = false
-				#else:
-					#sprite.play("knee")
-					#knee_hitbox.disabled = false
-			
 			
 			if is_on_floor():
 				velocity.x = move.x * speed
 			else:
 				if jump_move == 0.0:
-					velocity.x = move.x * speed * 0.25
+					velocity.x = move.x * speed
 				else:
 					velocity.x = jump_move * speed
 			
 			move_and_slide()
-		STATE.SUCCES:
+		STATE.HURT:
+			# animacion cuando esta levantandose
+			#blink_timer -= delta
+			#if blink_timer < 0.0:
+				#blink_timer = blink_timer_max
+				#sprite.modulate.a *= -1.0
+			pass
+		STATE.SUCCES: 
 			velocity.y += gravity_fall
 			if is_on_floor():
 				sprite.play("succes")
@@ -97,7 +105,6 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	if cur_state == STATE.FREEZE or is_attacking: return # Agregamos nueva condicion en el flujo
-	
 	sprite.flip_h = true if direction > 0.0 else false
 	
 	if is_on_floor():
@@ -111,6 +118,9 @@ func _process(_delta):
 				sprite.play("fall")
 			else:
 				sprite.play("jump")
+	
+	
+	
 
 func set_attack(_move: Vector2):
 	is_attacking = true 
@@ -127,11 +137,9 @@ func attack_handle(_punch_pressed : bool, _move: Vector2) -> Vector2:
 	if is_on_floor():
 		match sprite.animation:
 			"punch":
-				punch_hitbox.disabled = true 
 				if _punch_pressed: 
 					sprite.play("punch")
 					sprite.frame = 0 
-					punch_hitbox.disabled = false 
 				_move.x = 0.0
 				return _move
 			"punch_end":
@@ -155,4 +163,9 @@ func succes():
 
 func on_hitbox_area_entered(area: Area2D) -> void: # Funcion conectada cuando entra en contacto la hitbox 
 	if area.get_parent().has_method("hurt"):# verifica si al area se le puede dañar
-		area.get_parent().hurt() # Respera la estructura de que el padre tiene una area
+		var enemy = area.get_parent()
+		match sprite.animation:
+			"punch":
+				enemy.hurt(2)
+			"knee":
+				enemy.hurt(3)

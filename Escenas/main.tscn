@@ -291,27 +291,21 @@ position = Vector2(4064, 128)
 
 [node name="metalic_star15" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(4976, 112)
-can_move = true
 
 [node name="metalic_star18" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(4992, 96)
-can_move = true
 
 [node name="metalic_star31" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(5008, 80)
-can_move = true
 
 [node name="metalic_star20" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(4832, 64)
-can_move = true
 
 [node name="metalic_star21" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(4816, 64)
-can_move = true
 
 [node name="metalic_star23" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(4848, 64)
-can_move = true
 
 [node name="metalic_star19" parent="MetalicStars" instance=ExtResource("11_le4xx")]
 position = Vector2(5312, 112)
