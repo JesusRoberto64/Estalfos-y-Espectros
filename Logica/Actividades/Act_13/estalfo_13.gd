@@ -55,7 +55,8 @@ func _process(_delta):
 
 func _on_area_body_entered(body):
 	if body.is_in_group("Player"):
-		get_tree().call_deferred('reload_current_scene')
+		body.hurt()
+		#get_tree().call_deferred('reload_current_scene')
 
 func hurt(dammage: int = 1) -> void:
 	if destroyed or is_rising: return

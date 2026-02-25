@@ -170,7 +170,7 @@ radius = 9.0
 height = 44.0
 
 [node name="Estalfo_13" type="CharacterBody2D"]
-collision_layer = 2
+collision_layer = 0
 script = ExtResource("1_vxqtl")
 metadata/_edit_horizontal_guides_ = [27.0]
 
@@ -186,6 +186,7 @@ shape = SubResource("CapsuleShape2D_a860x")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 1)

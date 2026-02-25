@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://brgetf3e7rgt8"]
+[gd_scene load_steps=37 format=3 uid="uid://brgetf3e7rgt8"]
 
 [ext_resource type="Script" uid="uid://bhndfgtt2ibk4" path="res://Logica/Actividades/Act_11/player_11.gd" id="1_cgfde"]
 [ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="2_xlwfv"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cstm05168uyob" path="res://Arte/Sanson_00.png" id="4_b21vg"]
 [ext_resource type="Texture2D" uid="uid://0j3od0pbymnh" path="res://Arte/Sanson_rodillazo_00.png" id="4_xlwfv"]
 [ext_resource type="Texture2D" uid="uid://dgpq3i0fd8l7r" path="res://Arte/Sanson_succes_00.png" id="5_ohiiw"]
+[ext_resource type="Texture2D" uid="uid://xdb6vy225ak0" path="res://Arte/sanson_crunch.png" id="6_b21vg"]
+[ext_resource type="Script" uid="uid://clmyutfjv2q1k" path="res://Logica/player_sprite.gd" id="8_ohiiw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1xit"]
 atlas = ExtResource("2_xlwfv")
@@ -18,6 +20,10 @@ region = Rect2(62, 62, 62, 62)
 [sub_resource type="AtlasTexture" id="AtlasTexture_12kuk"]
 atlas = ExtResource("2_xlwfv")
 region = Rect2(124, 62, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohiiw"]
+atlas = ExtResource("4_xlwfv")
+region = Rect2(62, 0, 62, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vyom6"]
 atlas = ExtResource("3_7v5l4")
@@ -71,6 +77,10 @@ region = Rect2(186, 62, 62, 62)
 atlas = ExtResource("4_b21vg")
 region = Rect2(124, 0, 62, 62)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oba5i"]
+atlas = ExtResource("6_b21vg")
+region = Rect2(0, 0, 62, 62)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jtijx"]
 atlas = ExtResource("4_b21vg")
 region = Rect2(0, 0, 62, 62)
@@ -109,6 +119,14 @@ animations = [{
 }],
 "loop": false,
 "name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohiiw")
+}],
+"loop": true,
+"name": &"hurt",
 "speed": 5.0
 }, {
 "frames": [{
@@ -176,6 +194,14 @@ animations = [{
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_oba5i")
+}],
+"loop": false,
+"name": &"reviving",
+"speed": 11.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_ohiiw")
 }],
@@ -217,7 +243,8 @@ size = Vector2(39.5, 8)
 size = Vector2(21, 27)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 3
+collision_layer = 14
+collision_mask = 9
 floor_constant_speed = true
 floor_snap_length = 4.0
 script = ExtResource("1_cgfde")
@@ -225,9 +252,8 @@ metadata/_edit_group_ = true
 
 [node name="player_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_74tf5")
-animation = &"knee"
-frame = 2
-frame_progress = 1.0
+animation = &"hurt"
+script = ExtResource("8_ohiiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

@@ -26,8 +26,12 @@ signal get_beetle
 var is_attacking = false # Para saber si el personajes esta atacando.
 
 @export var hp = 10
-var hurt_timer = 0.35
-var recover_timer = 0.25
+var hurt_timer = 1.0
+var hurt_timer_max = 1.0
+
+var is_recovering = false
+var recovering_timer = 0.8
+var recovering_timer_max = 0.8
 
 func _ready():
 	add_to_group("Player")
@@ -36,7 +40,7 @@ func _ready():
 	# Cuando la hit box tiene contacto con un enemigo
 	hit_boxes.connect("area_entered", on_hitbox_area_entered)
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	var move = Vector2.ZERO
 	match cur_state:
 		STATE.MOVE:
@@ -86,13 +90,28 @@ func _physics_process(_delta):
 					velocity.x = jump_move * speed
 			
 			move_and_slide()
+			
+			# Recovering
+			if is_recovering:
+				recovering_timer -= delta
+				if recovering_timer <= 0.0:
+					recovering_timer = recovering_timer_max
+					recover()
 		STATE.HURT:
-			# animacion cuando esta levantandose
-			#blink_timer -= delta
-			#if blink_timer < 0.0:
-				#blink_timer = blink_timer_max
-				#sprite.modulate.a *= -1.0
-			pass
+			velocity.y += gravity_fall
+			velocity.x = lerp(velocity.x, 0.0, delta* 5.0)
+			if is_on_floor():
+				hurt_timer -= delta
+				if hurt_timer <= 0.0:
+					# guardia reset
+					is_attacking = false
+					for i in hit_boxes.get_children():
+						i.disabled = true
+					
+					cur_state = STATE.MOVE
+					hurt_timer =  hurt_timer_max
+					is_recovering = true
+			move_and_slide()
 		STATE.SUCCES: 
 			velocity.y += gravity_fall
 			if is_on_floor():
@@ -103,8 +122,10 @@ func _physics_process(_delta):
 	if position.y >= 500.0:
 		get_tree().call_deferred('reload_current_scene')
 
-func _process(_delta):
-	if cur_state == STATE.FREEZE or is_attacking: return # Agregamos nueva condicion en el flujo
+func _process(delta):
+	if is_recovering: sprite.blinking(delta)
+	if cur_state == STATE.FREEZE or is_attacking or cur_state == STATE.HURT: return # Agregamos nueva condicion en el flujo
+	
 	sprite.flip_h = true if direction > 0.0 else false
 	
 	if is_on_floor():
@@ -118,9 +139,6 @@ func _process(_delta):
 				sprite.play("fall")
 			else:
 				sprite.play("jump")
-	
-	
-	
 
 func set_attack(_move: Vector2):
 	is_attacking = true 
@@ -169,3 +187,20 @@ func on_hitbox_area_entered(area: Area2D) -> void: # Funcion conectada cuando en
 				enemy.hurt(2)
 			"knee":
 				enemy.hurt(3)
+
+func hurt(_hit : int = 1):
+	if cur_state == STATE.HURT or is_recovering: return
+	hp -= _hit
+	if hp <= 0:
+		get_tree().call_deferred('reload_current_scene')
+	sprite.play("hurt")
+	set_collision_layer_value(2, false)
+	cur_state = STATE.HURT
+	velocity.x = 500.0 * -direction # impulse when hited
+	velocity.y = -250.0
+	
+
+func recover() -> void:
+	set_collision_layer_value(2, true)
+	is_recovering = false
+	sprite.modulate.a = 1.0
