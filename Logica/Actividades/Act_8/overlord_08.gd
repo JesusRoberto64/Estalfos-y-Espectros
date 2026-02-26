@@ -8,10 +8,13 @@ extends Node2D
 var beetles : int = 0
 @onready var beetle_lab = $CanvasLayer/Beetle
 
+@onready var hp_bar = $CanvasLayer/HpBar 
+
 func _ready() -> void:
 	# Conectar señales 
 	Player.connect("get_beetle", get_beetle)
 	Escudo.connect("body_entered", succes)
+	Player.connect("set_hp", set_hp)
 
 func get_beetle() -> void:
 	beetles = beetles + 1
@@ -21,3 +24,6 @@ func succes(_body):
 	succes_lab.show()
 	Player.succes()
 	Escudo.succes()
+
+func set_hp(hp) -> void:
+	hp_bar.value = hp

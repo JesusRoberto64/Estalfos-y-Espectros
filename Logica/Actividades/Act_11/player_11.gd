@@ -25,9 +25,10 @@ signal get_beetle
 @onready var knee_hitbox = $Hit_Boxes/knee
 var is_attacking = false # Para saber si el personajes esta atacando.
 
-@export var hp = 10
+@export var hp : int = 10 
 var hurt_timer = 1.0
 var hurt_timer_max = 1.0
+signal set_hp(_hp: int)
 
 var is_recovering = false
 var recovering_timer = 0.8
@@ -191,6 +192,7 @@ func on_hitbox_area_entered(area: Area2D) -> void: # Funcion conectada cuando en
 func hurt(_hit : int = 1):
 	if cur_state == STATE.HURT or is_recovering: return
 	hp -= _hit
+	set_hp.emit(float(hp))
 	if hp <= 0:
 		get_tree().call_deferred('reload_current_scene')
 	sprite.play("hurt")
