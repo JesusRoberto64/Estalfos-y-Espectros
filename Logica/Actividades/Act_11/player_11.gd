@@ -1,6 +1,6 @@
 extends CharacterBody2D
 # Vamos a agregar la logica de golpe para el player
-enum STATE {SUCCES, MOVE, FREEZE, HURT}
+enum STATE {SUCCES, MOVE, FREEZE, HURT, DASH}
 var cur_state = STATE.MOVE
 
 var speed = 180.0 
@@ -34,6 +34,10 @@ var is_recovering = false
 var recovering_timer = 0.8
 var recovering_timer_max = 0.8
 
+var dash_force = 800.0
+var dash_timer = 0.5
+var dash_timer_max = 0.5
+
 func _ready():
 	add_to_group("Player")
 	# se conecta animation_finished para cuando la animación termina
@@ -46,6 +50,7 @@ func _physics_process(delta):
 	match cur_state:
 		STATE.MOVE:
 			move.x = Input.get_axis('ui_left', 'ui_right')
+			move.y = Input.get_axis('ui_up', 'ui_down')
 			
 			anim_mov = move
 			direction = direction if move.x == 0.0 else sign(move.x)
@@ -59,6 +64,12 @@ func _physics_process(delta):
 			var jumped = Input.is_action_just_pressed('jump')
 			
 			if jumped and is_on_floor():
+				if move.y == 1.0:
+					cur_state = STATE.DASH
+					velocity.x = dash_force * direction
+					set_collision_layer_value(2, false)
+					knee_hitbox.disabled = false
+					return
 				velocity.y = -jump_force
 				jump_move = move.x
 			elif Input.is_action_pressed("jump"):
@@ -83,36 +94,46 @@ func _physics_process(delta):
 				set_attack(move)
 			
 			if is_on_floor():
-				velocity.x = move.x * speed
-			else:
-				if jump_move == 0.0:
-					velocity.x = move.x * speed
+				if move.y != 0.0:
+					velocity.x = 0.0
 				else:
+					velocity.x = move.x * speed
+			else:
+				if jump_move == 0.0: # Parado
+					velocity.x = move.x * speed
+				else: 
 					velocity.x = jump_move * speed
 			
 			move_and_slide()
 			
 			# Recovering
-			if is_recovering:
-				recovering_timer -= delta
-				if recovering_timer <= 0.0:
-					recovering_timer = recovering_timer_max
-					recover()
+			recovering(delta)
 		STATE.HURT:
 			velocity.y += gravity_fall
-			velocity.x = lerp(velocity.x, 0.0, delta* 5.0)
+			velocity.x = lerp(velocity.x, 0.0, delta * 5.0)
 			if is_on_floor():
 				hurt_timer -= delta
 				if hurt_timer <= 0.0:
 					# guardia reset
-					is_attacking = false
-					for i in hit_boxes.get_children():
-						i.disabled = true
-					
+					reset_attack()
 					cur_state = STATE.MOVE
 					hurt_timer =  hurt_timer_max
 					is_recovering = true
 			move_and_slide()
+		STATE.DASH:
+			velocity.y += gravity_fall
+			velocity.x = lerp(velocity.x, 0.0, delta* 5.0)
+			
+			dash_timer -= delta
+			if dash_timer <= 0.0:
+				dash_timer = dash_timer_max
+				cur_state = STATE.MOVE
+				set_collision_layer_value(2, true)
+				velocity.x = 0.0
+				reset_attack()
+			move_and_slide()
+			
+			recovering(delta)
 		STATE.SUCCES: 
 			velocity.y += gravity_fall
 			if is_on_floor():
@@ -125,12 +146,22 @@ func _physics_process(delta):
 
 func _process(delta):
 	if is_recovering: sprite.blinking(delta)
-	if cur_state == STATE.FREEZE or is_attacking or cur_state == STATE.HURT: return # Agregamos nueva condicion en el flujo
+	if cur_state == STATE.DASH: 
+		sprite.play("dash")
+		return
+	if cur_state == STATE.FREEZE or is_attacking or cur_state == STATE.HURT: return 
 	
 	sprite.flip_h = true if direction > 0.0 else false
 	
 	if is_on_floor():
-		if anim_mov == Vector2.ZERO:
+		if anim_mov.y > 0.0:
+			sprite.play("duck")
+			if sprite.frame > 0:
+				sprite.frame = 1
+		elif anim_mov.y < 0.0:
+			sprite.play("idle")
+			sprite.frame = 1
+		elif anim_mov.x == 0.0:
 			sprite.play("idle")
 		else:
 			sprite.play("walk")
@@ -149,8 +180,6 @@ func set_attack(_move: Vector2):
 	else:
 		sprite.play("knee")
 		knee_hitbox.disabled = false
-	
-	pass
 
 func attack_handle(_punch_pressed : bool, _move: Vector2) -> Vector2:
 	if is_on_floor():
@@ -188,6 +217,8 @@ func on_hitbox_area_entered(area: Area2D) -> void: # Funcion conectada cuando en
 				enemy.hurt(2)
 			"knee":
 				enemy.hurt(3)
+			_:
+				enemy.hurt()
 
 func hurt(_hit : int = 1):
 	if cur_state == STATE.HURT or is_recovering: return
@@ -206,3 +237,15 @@ func recover() -> void:
 	set_collision_layer_value(2, true)
 	is_recovering = false
 	sprite.modulate.a = 1.0
+
+func recovering(delta) -> void:
+	if is_recovering:
+		recovering_timer -= delta
+		if recovering_timer <= 0.0:
+			recovering_timer = recovering_timer_max
+			recover()
+
+func reset_attack() -> void:
+	is_attacking = false
+	for i in hit_boxes.get_children():
+		i.disabled = true

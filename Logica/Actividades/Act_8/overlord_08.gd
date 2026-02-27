@@ -3,12 +3,12 @@ extends Node2D
 @onready var Player = $Player
 @onready var Escudo = $Escudo
 
-@onready var succes_lab = $CanvasLayer/Succes
+@onready var succes_lab = $UI/Succes
 
 var beetles : int = 0
-@onready var beetle_lab = $CanvasLayer/Beetle
+@onready var beetle_lab = $UI/Beetle
 
-@onready var hp_bar = $CanvasLayer/HpBar 
+@onready var hp_bar = $UI/HpBar 
 
 func _ready() -> void:
 	# Conectar señales 

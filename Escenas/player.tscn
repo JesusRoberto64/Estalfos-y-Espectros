@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://brgetf3e7rgt8"]
+[gd_scene load_steps=40 format=3 uid="uid://brgetf3e7rgt8"]
 
 [ext_resource type="Script" uid="uid://bhndfgtt2ibk4" path="res://Logica/Actividades/Act_11/player_11.gd" id="1_cgfde"]
 [ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="2_xlwfv"]
@@ -8,6 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://dgpq3i0fd8l7r" path="res://Arte/Sanson_succes_00.png" id="5_ohiiw"]
 [ext_resource type="Texture2D" uid="uid://xdb6vy225ak0" path="res://Arte/sanson_crunch.png" id="6_b21vg"]
 [ext_resource type="Script" uid="uid://clmyutfjv2q1k" path="res://Logica/player_sprite.gd" id="8_ohiiw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knqkl"]
+atlas = ExtResource("6_b21vg")
+region = Rect2(62, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul4kv"]
+atlas = ExtResource("4_b21vg")
+region = Rect2(248, 0, 62, 62)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y717v"]
+atlas = ExtResource("6_b21vg")
+region = Rect2(0, 0, 62, 62)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1xit"]
 atlas = ExtResource("2_xlwfv")
@@ -107,6 +119,25 @@ region = Rect2(62, 124, 62, 62)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_74tf5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knqkl")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul4kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y717v")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e1xit")
@@ -252,7 +283,7 @@ metadata/_edit_group_ = true
 
 [node name="player_sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_74tf5")
-animation = &"hurt"
+animation = &"duck"
 script = ExtResource("8_ohiiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

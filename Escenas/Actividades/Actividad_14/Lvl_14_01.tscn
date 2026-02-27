@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://eqhe7nabcmg4" path="res://Arte/arena.png" id="2_fld0y"]
 [ext_resource type="PackedScene" uid="uid://brgetf3e7rgt8" path="res://Escenas/player.tscn" id="3_7c8xp"]
 [ext_resource type="Texture2D" uid="uid://bs5nt62yuwpby" path="res://Arte/Tiles_template_yoshi.png" id="8_xhoy3"]
+[ext_resource type="PackedScene" uid="uid://dr27kcxkd4svl" path="res://Escenas/ui.tscn" id="9_7c8xp"]
 [ext_resource type="PackedScene" uid="uid://d2a7d77hrgv82" path="res://Escenas/Actividades/Actividad_05/escarabajo_05.tscn" id="9_dfomg"]
 [ext_resource type="PackedScene" uid="uid://du5fxu540x7m5" path="res://Escenas/Actividades/Actividad_06/metalic_star_06.tscn" id="10_t6qgt"]
 [ext_resource type="PackedScene" uid="uid://b46axkr1mypa2" path="res://Escenas/Actividades/Actividad_08/escudo_08.tscn" id="11_i0e25"]
 [ext_resource type="PackedScene" uid="uid://bkmepcyufjkc7" path="res://Escenas/Actividades/Actividad_13/invonker_13.tscn" id="13_06q53"]
-[ext_resource type="Texture2D" uid="uid://ce5iho6vjlfwr" path="res://Arte/escarabajo_00.png" id="14_l2vcu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q6wny"]
 texture = ExtResource("8_xhoy3")
@@ -238,29 +238,4 @@ invoker_timer_limit = 1.0
 position = Vector2(1072, 160)
 max_enemy = 2
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Beetle" type="Label" parent="CanvasLayer"]
-offset_left = 32.0
-offset_right = 64.0
-offset_bottom = 18.0
-theme_override_font_sizes/font_size = 13
-text = "x 0"
-metadata/_edit_group_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Beetle"]
-position = Vector2(-16, 0)
-texture = ExtResource("14_l2vcu")
-centered = false
-offset = Vector2(-3, 0)
-vframes = 7
-frame = 1
-
-[node name="Succes" type="Label" parent="CanvasLayer"]
-visible = false
-offset_top = 64.0
-offset_right = 320.0
-offset_bottom = 87.0
-size_flags_horizontal = 4
-text = "¡TERMINADO!"
-horizontal_alignment = 1
+[node name="UI" parent="." instance=ExtResource("9_7c8xp")]
