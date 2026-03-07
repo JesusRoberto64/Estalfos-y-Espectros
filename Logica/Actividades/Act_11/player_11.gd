@@ -38,6 +38,8 @@ var dash_force = 800.0
 var dash_timer = 0.5
 var dash_timer_max = 0.5
 
+var is_freeze = false
+
 func _ready():
 	add_to_group("Player")
 	# se conecta animation_finished para cuando la animación termina
@@ -47,6 +49,7 @@ func _ready():
 
 func _physics_process(delta):
 	var move = Vector2.ZERO
+	if is_freeze: return
 	match cur_state:
 		STATE.MOVE:
 			move.x = Input.get_axis('ui_left', 'ui_right')
@@ -224,6 +227,7 @@ func hurt(_hit : int = 1):
 	if cur_state == STATE.HURT or is_recovering: return
 	hp -= _hit
 	set_hp.emit(float(hp))
+	call_deferred('reset_attack')
 	if hp <= 0:
 		get_tree().call_deferred('reload_current_scene')
 	sprite.play("hurt")
