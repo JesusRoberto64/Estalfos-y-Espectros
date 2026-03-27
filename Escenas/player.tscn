@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://brgetf3e7rgt8"]
+[gd_scene format=3 uid="uid://brgetf3e7rgt8"]
 
 [ext_resource type="Script" uid="uid://bhndfgtt2ibk4" path="res://Logica/Actividades/Act_11/player_11.gd" id="1_cgfde"]
 [ext_resource type="Texture2D" uid="uid://6u4dwtnytg5o" path="res://Arte/personaje_jump.png" id="2_xlwfv"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dgpq3i0fd8l7r" path="res://Arte/Sanson_succes_00.png" id="5_ohiiw"]
 [ext_resource type="Texture2D" uid="uid://xdb6vy225ak0" path="res://Arte/sanson_crunch.png" id="6_b21vg"]
 [ext_resource type="Script" uid="uid://clmyutfjv2q1k" path="res://Logica/player_sprite.gd" id="8_ohiiw"]
+[ext_resource type="PackedScene" uid="uid://d1u6dy53bnnbs" path="res://Escenas/touch_buttons.tscn" id="9_ohiiw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_knqkl"]
 atlas = ExtResource("6_b21vg")
@@ -273,7 +274,7 @@ size = Vector2(39.5, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohiiw"]
 size = Vector2(21, 27)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=724726610]
 collision_layer = 14
 collision_mask = 9
 floor_constant_speed = true
@@ -281,31 +282,33 @@ floor_snap_length = 4.0
 script = ExtResource("1_cgfde")
 metadata/_edit_group_ = true
 
-[node name="player_sprite" type="AnimatedSprite2D" parent="."]
+[node name="player_sprite" type="AnimatedSprite2D" parent="." unique_id=370768060]
 sprite_frames = SubResource("SpriteFrames_74tf5")
 animation = &"duck"
 script = ExtResource("8_ohiiw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1363018562]
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_rs70f")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1942533724]
 limit_top = 0
 limit_bottom = 216
 
-[node name="Hit_Boxes" type="Area2D" parent="."]
+[node name="Hit_Boxes" type="Area2D" parent="." unique_id=507942857]
 collision_layer = 0
 collision_mask = 2
 
-[node name="punch" type="CollisionShape2D" parent="Hit_Boxes"]
+[node name="punch" type="CollisionShape2D" parent="Hit_Boxes" unique_id=1626941229]
 position = Vector2(-9.75, -9)
 shape = SubResource("RectangleShape2D_ejooy")
 disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
 
-[node name="knee" type="CollisionShape2D" parent="Hit_Boxes"]
+[node name="knee" type="CollisionShape2D" parent="Hit_Boxes" unique_id=486763949]
 position = Vector2(-20.5, 8.5)
 shape = SubResource("RectangleShape2D_ohiiw")
 disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
+
+[node name="TouchButtons" parent="." unique_id=6022075 instance=ExtResource("9_ohiiw")]
