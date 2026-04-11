@@ -229,6 +229,7 @@ func hurt(_hit : int = 1):
 	sprite.play("hurt")
 	set_collision_layer_value(2, false)
 	cur_state = STATE.HURT
+	call_deferred("reset_attack")
 	velocity.x = 500.0 * -direction # impulse when hited
 	velocity.y = -250.0
 	
