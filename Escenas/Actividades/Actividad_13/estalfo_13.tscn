@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://3uh22mrbqvth"]
+[gd_scene format=3 uid="uid://3uh22mrbqvth"]
 
 [ext_resource type="Script" uid="uid://caflcdik4v3jf" path="res://Logica/Actividades/Act_13/estalfo_13.gd" id="1_vxqtl"]
 [ext_resource type="Texture2D" uid="uid://dcwsificn680j" path="res://Arte/Estalfo_destruction_00.png" id="2_iwtqu"]
@@ -169,26 +169,27 @@ height = 42.0
 radius = 9.0
 height = 44.0
 
-[node name="Estalfo_13" type="CharacterBody2D"]
+[node name="Estalfo_13" type="CharacterBody2D" unique_id=2045821580]
 collision_layer = 0
 script = ExtResource("1_vxqtl")
+hp = 1
 metadata/_edit_horizontal_guides_ = [27.0]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=835097232]
 sprite_frames = SubResource("SpriteFrames_q5pdj")
 animation = &"rise"
 frame = 6
 frame_progress = 1.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=641432142]
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_a860x")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1606444295]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1444224704]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_ldm1y")
 debug_color = Color(0.8431017, 0.2941401, 0.6200547, 0.41960785)

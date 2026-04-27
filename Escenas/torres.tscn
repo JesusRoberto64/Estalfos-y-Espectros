@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://duivhfum4p8lk"]
+
+[ext_resource type="Texture2D" uid="uid://k6tncbaxj411" path="res://Arte/tower_00.png" id="1_hoyoe"]
+[ext_resource type="Texture2D" uid="uid://ddbiubse7u7jb" path="res://Arte/tower_01.png" id="2_ne8el"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hoyoe"]
+size = Vector2(48, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ne8el"]
+size = Vector2(48, 192)
+
+[node name="Torre" type="Node2D" unique_id=858219104]
+
+[node name="Tower00" type="Sprite2D" parent="." unique_id=942027013]
+position = Vector2(0, 224)
+texture = ExtResource("1_hoyoe")
+
+[node name="Tower01" type="Sprite2D" parent="." unique_id=167767350]
+texture = ExtResource("2_ne8el")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1033131997]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1371518299]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_hoyoe")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1449654422]
+position = Vector2(0, 240)
+shape = SubResource("RectangleShape2D_ne8el")

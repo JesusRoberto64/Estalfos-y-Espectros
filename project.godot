@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Estalfos y Espectros"
-run/main_scene="uid://ch1e7fftw26sk"
+run/main_scene="uid://b7xgo1xpsn58k"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -27,7 +27,6 @@ Globals="*res://Logica/Actividades/Act_8/Globals_08.gd"
 
 window/size/viewport_width=384
 window/size/viewport_height=216
-window/size/mode=3
 window/size/window_width_override=640
 window/size/window_height_override=360
 window/stretch/mode="viewport"

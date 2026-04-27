@@ -64,15 +64,15 @@ func _physics_process(delta):
 			var jumped = Input.is_action_just_pressed('jump')
 			
 			if jumped and is_on_floor():
-				if move.y == 1.0:
-					cur_state = STATE.DASH
-					velocity.x = dash_force * direction
-					set_collision_layer_value(2, false)
-					knee_hitbox.disabled = false
-					return
+				#if move.y == 1.0:
+					#cur_state = STATE.DASH
+					#velocity.x = dash_force * direction
+					#set_collision_layer_value(2, false)
+					#knee_hitbox.disabled = false
+					#return
 				velocity.y = -jump_force
 				jump_move = move.x
-			elif Input.is_action_pressed("jump"):
+			if Input.is_action_pressed("jump"):
 				velocity.y -= jump_impulse
 			
 			if not is_on_floor() and jumped and jump_counter > 0:
@@ -85,6 +85,14 @@ func _physics_process(delta):
 			
 			# Lógica de ataque
 			var punch_pressed = Input.is_action_just_pressed("punch")
+			
+			if punch_pressed and is_on_floor():
+				if move.y == 1.0:
+					cur_state = STATE.DASH
+					velocity.x = dash_force * direction
+					set_collision_layer_value(2, false)
+					knee_hitbox.disabled = false
+					return
 			
 			if is_attacking:
 				move = attack_handle(punch_pressed, move)
