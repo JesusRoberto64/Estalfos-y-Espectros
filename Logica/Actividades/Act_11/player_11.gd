@@ -16,7 +16,7 @@ var jump_air_force = 325.0
 var jump_move = 0
 
 var anim_mov : Vector2 = Vector2.LEFT 
-@onready var sprite : AnimatedSprite2D = $player_sprite 
+@onready var sprite = $player_sprite 
 
 signal get_beetle
 
@@ -37,6 +37,8 @@ var recovering_timer_max = 0.8
 var dash_force = 800.0
 var dash_timer = 0.5
 var dash_timer_max = 0.5
+
+var Proyectil = preload("res://Escenas/proyectil.tscn")
 
 func _ready():
 	add_to_group("Player")
@@ -182,7 +184,15 @@ func _process(delta):
 
 func set_attack(_move: Vector2):
 	is_attacking = true 
-	if is_on_floor():
+	if _move.y < 0.0:
+		sprite.play("throw")
+		var inst = Proyectil.instantiate()
+		inst.global_position = hit_boxes.global_position
+		inst.direction = direction
+		get_parent().add_child(inst)
+		
+		
+	elif is_on_floor():
 		sprite.play("punch")
 		punch_hitbox.disabled = false
 	else:
@@ -206,7 +216,7 @@ func attack_handle(_punch_pressed : bool, _move: Vector2) -> Vector2:
 	return _move
 
 func on_animation_finished() -> void: # Cuando la animación termina
-	if sprite.animation == "punch": # Si acabón la animación de punch
+	if sprite.animation == "punch" or sprite.animation == "throw": # Si acabón la animación de punch
 		sprite.play("punch_end")
 	elif sprite.animation == "punch_end":
 		punch_hitbox.disabled = true # desactivamos la colisión de golpe
@@ -222,7 +232,7 @@ func on_hitbox_area_entered(area: Area2D) -> void: # Funcion conectada cuando en
 		var enemy = area.get_parent()
 		match sprite.animation:
 			"punch":
-				enemy.hurt(2)
+				enemy.hurt(3)
 			"knee":
 				enemy.hurt(3)
 			_:

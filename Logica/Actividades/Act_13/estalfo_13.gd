@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var hp : int = 3
+@export var hp : float = 3
 @export var speed = 85.0
 var gravity = 20.0
 var direction = -1.0
@@ -58,7 +58,7 @@ func _on_area_body_entered(body):
 		body.hurt()
 		#get_tree().call_deferred('reload_current_scene')
 
-func hurt(dammage: int = 1) -> void:
+func hurt(dammage: float = 1.0) -> void:
 	if destroyed or is_rising: return
 	hp -= dammage
 	hurt_timer = hurt_timer_max

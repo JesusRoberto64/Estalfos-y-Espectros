@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2a7d77hrgv82"]
+[gd_scene format=3 uid="uid://d2a7d77hrgv82"]
 
 [ext_resource type="Script" uid="uid://bdy70ph11c60r" path="res://Logica/Actividades/Act_5/escarabajo_05.gd" id="1_b245m"]
 [ext_resource type="Texture2D" uid="uid://ce5iho6vjlfwr" path="res://Arte/escarabajo_00.png" id="2_t8yip"]
@@ -75,17 +75,17 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_x2nih"]
 radius = 6.0
 
-[node name="Escarabajo" type="Area2D"]
-collision_layer = 0
-collision_mask = 4
+[node name="Escarabajo" type="Area2D" unique_id=423102070]
+collision_layer = 4
+collision_mask = 8
 script = ExtResource("1_b245m")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1663431480]
 sprite_frames = SubResource("SpriteFrames_jhiqg")
 autoplay = "default"
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=208479159]
 position = Vector2(8, 8)
 shape = SubResource("CircleShape2D_x2nih")
 
