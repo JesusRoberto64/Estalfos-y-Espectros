@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://b7xgo1xpsn58k"]
+
+[ext_resource type="Texture2D" uid="uid://ce5iho6vjlfwr" path="res://Arte/escarabajo_00.png" id="1_f7plo"]
+[ext_resource type="Texture2D" uid="uid://cil180hl0bfc2" path="res://Arte/bg.png" id="1_f76wy"]
+[ext_resource type="Script" uid="uid://dvjv1v26j4hvw" path="res://Logica/Extras/torres.gd" id="2_1syvk"]
+[ext_resource type="Script" uid="uid://q2divdecsp72" path="res://Logica/Extras/escarabajo.gd" id="2_emoyd"]
+[ext_resource type="PackedScene" uid="uid://duivhfum4p8lk" path="res://Escenas/Extras/torres.tscn" id="2_g1o62"]
+[ext_resource type="Texture2D" uid="uid://e36ivqjudvph" path="res://Arte/ground_00.png" id="4_swq3i"]
+[ext_resource type="Script" uid="uid://ddhx8wyuvrbso" path="res://Logica/Extras/ground.gd" id="6_f56h8"]
+[ext_resource type="Script" uid="uid://tr0r7ysibx65" path="res://Logica/Extras/Text.gd" id="7_jlp7m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swq3i"]
+atlas = ExtResource("1_f7plo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emoyd"]
+atlas = ExtResource("1_f7plo")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f76wy"]
+atlas = ExtResource("1_f7plo")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_swq3i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swq3i")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emoyd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f76wy")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 11.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g1o62"]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1syvk"]
+size = Vector2(151, 29)
+
+[node name="Flappy_Minigame" type="Node2D" unique_id=1496489957]
+
+[node name="Fondo" type="Sprite2D" parent="." unique_id=184693235]
+texture = ExtResource("1_f76wy")
+centered = false
+
+[node name="Player" type="AnimatedSprite2D" parent="." unique_id=1773932894]
+position = Vector2(56, 111)
+rotation = 1.5707964
+sprite_frames = SubResource("SpriteFrames_swq3i")
+animation = &"falling"
+autoplay = "falling"
+script = ExtResource("2_emoyd")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="Player" unique_id=471177092]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D" unique_id=184109968]
+shape = SubResource("CircleShape2D_g1o62")
+
+[node name="Torres" type="Node2D" parent="." unique_id=684858191]
+script = ExtResource("2_1syvk")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Torres" parent="Torres" unique_id=858219104 instance=ExtResource("2_g1o62")]
+position = Vector2(174, 0)
+
+[node name="Torres2" parent="Torres" unique_id=340768848 instance=ExtResource("2_g1o62")]
+position = Vector2(290, 0)
+
+[node name="Torres3" parent="Torres" unique_id=1267700585 instance=ExtResource("2_g1o62")]
+position = Vector2(401, 0)
+
+[node name="Torres4" parent="Torres" unique_id=1068510456 instance=ExtResource("2_g1o62")]
+position = Vector2(524, 0)
+
+[node name="ground" type="Parallax2D" parent="." unique_id=1732928985]
+repeat_size = Vector2(480, 0)
+autoscroll = Vector2(-50, 0)
+script = ExtResource("6_f56h8")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Ground00" type="Sprite2D" parent="ground" unique_id=278274041]
+position = Vector2(0, 19)
+texture = ExtResource("4_swq3i")
+centered = false
+
+[node name="Areaground" type="Area2D" parent="." unique_id=862313793]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areaground" unique_id=1543799048]
+position = Vector2(75.5, 209.5)
+shape = SubResource("RectangleShape2D_1syvk")
+
+[node name="Control" type="Control" parent="." unique_id=1879459132]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Control" unique_id=1407651477]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = 60.0
+offset_right = 101.0
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Presiona"
+script = ExtResource("7_jlp7m")
+
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
+[connection signal="set_freeze" from="Control/Label" to="Torres" method="set_freeze"]
+[connection signal="set_freeze" from="Control/Label" to="ground" method="set_freeze"]
+[connection signal="set_freeze" from="Control/Label" to="Player" method="set_freeze"]

@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://Logica/Actividades/Act_8/Globals_08.gd"
+Globals="*res://Logica/Globals_08.gd"
 
 [display]
 

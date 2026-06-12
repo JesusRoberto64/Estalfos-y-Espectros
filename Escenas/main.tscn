@@ -1,16 +1,16 @@
 [gd_scene format=4 uid="uid://0o8icio7f0bu"]
 
-[ext_resource type="Script" uid="uid://dh6mr2peel6bo" path="res://Logica/Actividades/Act_8/overlord_08.gd" id="1_i4rd6"]
+[ext_resource type="Script" uid="uid://dh6mr2peel6bo" path="res://Logica/overlord_08.gd" id="1_i4rd6"]
 [ext_resource type="Texture2D" uid="uid://cil180hl0bfc2" path="res://Arte/bg.png" id="2_l8mww"]
 [ext_resource type="PackedScene" uid="uid://brgetf3e7rgt8" path="res://Escenas/player.tscn" id="3_n3qho"]
 [ext_resource type="Texture2D" uid="uid://bn0cmlvkfhdf6" path="res://Arte/Tiles_template_est.png" id="5_l8mww"]
 [ext_resource type="Texture2D" uid="uid://bs5nt62yuwpby" path="res://Arte/Tiles_template_yoshi.png" id="8_3pd83"]
-[ext_resource type="PackedScene" uid="uid://b46axkr1mypa2" path="res://Escenas/Actividades/Actividad_08/escudo_08.tscn" id="9_c8ola"]
-[ext_resource type="PackedScene" uid="uid://dr27kcxkd4svl" path="res://Escenas/ui.tscn" id="9_n3qho"]
-[ext_resource type="PackedScene" uid="uid://d2a7d77hrgv82" path="res://Escenas/Actividades/Actividad_05/escarabajo_05.tscn" id="10_y8e5y"]
-[ext_resource type="PackedScene" uid="uid://du5fxu540x7m5" path="res://Escenas/Actividades/Actividad_06/metalic_star_06.tscn" id="11_le4xx"]
-[ext_resource type="PackedScene" uid="uid://bkmepcyufjkc7" path="res://Escenas/Actividades/Actividad_13/invonker_13.tscn" id="12_ipmsd"]
-[ext_resource type="PackedScene" uid="uid://yyyq7wc8tkyq" path="res://Escenas/Actividades/Actividad_15/pause.tscn" id="14_xgh3l"]
+[ext_resource type="PackedScene" uid="uid://b46axkr1mypa2" path="res://Escenas/Items/escudo_08.tscn" id="9_c8ola"]
+[ext_resource type="PackedScene" uid="uid://dr27kcxkd4svl" path="res://Escenas/UI/ui.tscn" id="9_n3qho"]
+[ext_resource type="PackedScene" uid="uid://d2a7d77hrgv82" path="res://Escenas/Items/escarabajo_05.tscn" id="10_y8e5y"]
+[ext_resource type="PackedScene" uid="uid://du5fxu540x7m5" path="res://Escenas/Enemigos/metalic_star_06.tscn" id="11_le4xx"]
+[ext_resource type="PackedScene" uid="uid://bkmepcyufjkc7" path="res://Escenas/Enemigos/invonker_13.tscn" id="12_ipmsd"]
+[ext_resource type="PackedScene" uid="uid://yyyq7wc8tkyq" path="res://Escenas/UI/pause.tscn" id="14_xgh3l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q6wny"]
 texture = ExtResource("8_3pd83")
@@ -91,7 +91,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_q6wny")
 sources/1 = SubResource("TileSetAtlasSource_b1m0k")
 
-[node name="Main_15" type="Node2D" unique_id=1736225864]
+[node name="Main" type="Node2D" unique_id=1736225864]
 script = ExtResource("1_i4rd6")
 metadata/_edit_horizontal_guides_ = [216.0]
 
@@ -117,7 +117,6 @@ tile_set = SubResource("TileSet_bsi0n")
 
 [node name="Escudo" parent="." unique_id=2090454601 instance=ExtResource("9_c8ola")]
 position = Vector2(6064, 96)
-to_level = "res://Escenas/Actividades/Actividad_14/Lvl_14_01.tscn"
 
 [node name="Escarabajos" type="Node2D" parent="." unique_id=1511546541]
 
