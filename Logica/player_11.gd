@@ -252,7 +252,7 @@ func hurt(_hit : int = 1):
 	velocity.y = -250.0
 
 func recover() -> void:
-	set_collision_layer_value(2, true)
+	#set_collision_layer_value(2, true)
 	is_recovering = false
 	sprite.modulate.a = 1.0
 
