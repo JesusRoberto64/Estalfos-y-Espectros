@@ -58,10 +58,6 @@ region = Rect2(62, 0, 62, 62)
 atlas = ExtResource("2_xlwfv")
 region = Rect2(124, 0, 62, 62)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7v5l4"]
-atlas = ExtResource("4_xlwfv")
-region = Rect2(62, 0, 62, 62)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_b21vg"]
 atlas = ExtResource("4_xlwfv")
 region = Rect2(124, 0, 62, 62)
@@ -192,9 +188,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7v5l4")
-}, {
-"duration": 1.5,
 "texture": SubResource("AtlasTexture_b21vg")
 }, {
 "duration": 1.0,
@@ -202,7 +195,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"knee",
-"speed": 12.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -284,7 +277,7 @@ height = 50.0
 size = Vector2(39.5, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohiiw"]
-size = Vector2(21, 27)
+size = Vector2(31, 37)
 
 [node name="Player" type="CharacterBody2D" unique_id=724726610]
 collision_layer = 8
@@ -296,7 +289,8 @@ metadata/_edit_group_ = true
 
 [node name="player_sprite" type="AnimatedSprite2D" parent="." unique_id=370768060]
 sprite_frames = SubResource("SpriteFrames_74tf5")
-animation = &"throw"
+animation = &"knee"
+frame = 1
 frame_progress = 1.0
 script = ExtResource("8_ohiiw")
 
@@ -319,7 +313,7 @@ disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)
 
 [node name="knee" type="CollisionShape2D" parent="Hit_Boxes" unique_id=486763949]
-position = Vector2(-20.5, 8.5)
+position = Vector2(-15.5, 13.5)
 shape = SubResource("RectangleShape2D_ohiiw")
 disabled = true
 debug_color = Color(0.7490196, 0.28235295, 0.8980392, 0.41960785)

@@ -83,14 +83,6 @@ func _physics_process(delta):
 			# Lógica de ataque
 			var punch_pressed = Input.is_action_just_pressed("punch")
 			
-			#if punch_pressed and is_on_floor():
-				#if move.y == 1.0:
-					#cur_state = STATE.DASH
-					#velocity.x = dash_force * direction
-					#set_collision_layer_value(2, false)
-					#knee_hitbox.disabled = false
-					#return
-			
 			if is_attacking:
 				move = attack_handle(punch_pressed, move)
 			
@@ -99,8 +91,10 @@ func _physics_process(delta):
 				set_attack(move)
 			
 			if is_on_floor():
+				if cur_state == STATE.DASH:
+					return
 				if move.y != 0.0:
-					velocity.x = 0.0
+					velocity.x = 0.0  
 				else:
 					velocity.x = move.x * speed
 			else:
@@ -133,7 +127,7 @@ func _physics_process(delta):
 			if dash_timer <= 0.0:
 				dash_timer = dash_timer_max
 				cur_state = STATE.MOVE
-				set_collision_layer_value(2, true)
+				set_collision_layer_value(2, true) # vulnerable a enemigos
 				velocity.x = 0.0
 				reset_attack()
 			move_and_slide()
@@ -180,7 +174,7 @@ func _process(delta):
 func set_attack(_move: Vector2):
 	is_attacking = true 
 	
-	if _move.y < 0.0:
+	if _move.y < 0.0: 
 		sprite.play("throw")
 		var inst = Proyectil.instantiate()
 		inst.global_position = hit_boxes.global_position
@@ -190,7 +184,8 @@ func set_attack(_move: Vector2):
 		if _move.y == 1.0:
 			cur_state = STATE.DASH
 			velocity.x = dash_force * direction
-			set_collision_layer_value(2, false)
+			set_collision_layer_value(2, false) # invensible a enemigos
+			sprite.play("dash")
 			knee_hitbox.disabled = false
 		else:
 			sprite.play("punch")
@@ -215,8 +210,8 @@ func attack_handle(_punch_pressed : bool, _move: Vector2) -> Vector2:
 				is_attacking = false
 	return _move
 
-func on_animation_finished() -> void: # Cuando la animación termina
-	if sprite.animation == "punch" or sprite.animation == "throw": # Si acabón la animación de punch
+func on_animation_finished() -> void:
+	if sprite.animation == "punch" or sprite.animation == "throw":
 		sprite.play("punch_end")
 	elif sprite.animation == "punch_end":
 		punch_hitbox.disabled = true # desactivamos la colisión de golpe
@@ -245,14 +240,13 @@ func hurt(_hit : int = 1):
 	if hp <= 0:
 		get_tree().call_deferred('reload_current_scene')
 	sprite.play("hurt")
-	set_collision_layer_value(2, false)
+	set_collision_layer_value(2, false) # Invensible a enemigos
 	cur_state = STATE.HURT
 	call_deferred("reset_attack")
 	velocity.x = 500.0 * -direction # impulse when hited
 	velocity.y = -250.0
 
 func recover() -> void:
-	#set_collision_layer_value(2, true)
 	is_recovering = false
 	sprite.modulate.a = 1.0
 
