@@ -1,6 +1,6 @@
 extends CharacterBody2D
 # Vamos a agregar la logica de golpe para el player
-enum STATE {SUCCES, MOVE, FREEZE, HURT, DASH}
+enum STATE {SUCCES, MOVE, FREEZE, HURT, DASH, READ}
 var cur_state = STATE.MOVE
 
 var speed = 180.0 
@@ -139,6 +139,8 @@ func _physics_process(delta):
 				sprite.play("succes")
 				cur_state = STATE.FREEZE
 			move_and_slide()
+		STATE.READ:
+			pass
 	
 	if position.y >= 500.0:
 		get_tree().call_deferred('reload_current_scene')
@@ -261,3 +263,9 @@ func reset_attack() -> void:
 	is_attacking = false
 	for i in hit_boxes.get_children():
 		i.disabled = true
+
+func toggle_freeze() -> void:
+	if cur_state == STATE.FREEZE:
+		cur_state = STATE.MOVE
+	else:
+		cur_state = STATE.FREEZE

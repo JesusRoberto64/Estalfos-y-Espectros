@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bs5nt62yuwpby" path="res://Arte/Tiles_template_yoshi.png" id="8_3pd83"]
 [ext_resource type="PackedScene" uid="uid://b46axkr1mypa2" path="res://Escenas/Items/escudo_08.tscn" id="9_c8ola"]
 [ext_resource type="PackedScene" uid="uid://dr27kcxkd4svl" path="res://Escenas/UI/ui.tscn" id="9_n3qho"]
+[ext_resource type="PackedScene" uid="uid://dyfdrbnop17j2" path="res://Escenas/Items/Dialogic_generic.tscn" id="10_b1m0k"]
 [ext_resource type="PackedScene" uid="uid://d2a7d77hrgv82" path="res://Escenas/Items/escarabajo_05.tscn" id="10_y8e5y"]
 [ext_resource type="PackedScene" uid="uid://du5fxu540x7m5" path="res://Escenas/Enemigos/metalic_star_06.tscn" id="11_le4xx"]
 [ext_resource type="PackedScene" uid="uid://bkmepcyufjkc7" path="res://Escenas/Enemigos/invonker_13.tscn" id="12_ipmsd"]
@@ -433,6 +434,12 @@ max_enemy = 1
 position = Vector2(5792, 176)
 cur_mode = 1
 invoker_timer_limit = 1.0
+
+[node name="PowerUp" type="Node2D" parent="." unique_id=746520567]
+
+[node name="PowerUp_Generic" parent="PowerUp" unique_id=1885630641 instance=ExtResource("10_b1m0k")]
+position = Vector2(206, 136)
+text = "Abajo y golpe para barrerte"
 
 [node name="UI" parent="." unique_id=1895535634 instance=ExtResource("9_n3qho")]
 

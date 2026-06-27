@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bqc6wyhvk6lsw"]
+
+[ext_resource type="Script" uid="uid://dh22pc7lrihn1" path="res://Logica/UI/dialog_area.gd" id="1_5snue"]
+[ext_resource type="Script" uid="uid://kwfk8mcvuh1h" path="res://Logica/UI/canvas_dialog_layer.gd" id="2_rncp1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rigpb"]
+
+[node name="DialogArea" type="Area2D" unique_id=1788926369]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_5snue")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1361783670]
+shape = SubResource("RectangleShape2D_rigpb")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2078758436]
+script = ExtResource("2_rncp1")
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=2099765585]
+offset_left = 6.0
+offset_top = 112.0
+offset_right = 368.0
+offset_bottom = 208.0
+
+[node name="name" type="Panel" parent="CanvasLayer/Panel" unique_id=40524532]
+layout_mode = 0
+offset_top = -32.0
+offset_right = 58.0
+offset_bottom = -8.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/name" unique_id=807303332]
+layout_mode = 1
+offset_left = 8.0
+offset_right = 48.0
+offset_bottom = 23.0
+text = "Mess"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel" unique_id=51538631]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sampler"
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="dialog_ended" from="CanvasLayer" to="." method="_on_canvas_layer_dialog_ended"]

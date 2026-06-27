@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://dyfdrbnop17j2"]
+
+[ext_resource type="Script" uid="uid://d2hprp5e1v6av" path="res://Logica/UI/Dialogic_generic.gd" id="1_5kqy7"]
+[ext_resource type="Texture2D" uid="uid://b22owc0q77f18" path="res://Arte/escudo.png" id="1_suidt"]
+[ext_resource type="Texture2D" uid="uid://brcbbkltq10kj" path="res://Arte/Sanson_idle_00.png" id="3_sii8s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suidt"]
+atlas = ExtResource("1_suidt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ps5ge"]
+atlas = ExtResource("1_suidt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5kqy7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suidt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ps5ge")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sii8s"]
+radius = 7.28011
+
+[node name="Dialog_Generic" type="Area2D" unique_id=1977437821]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_5kqy7")
+text = "sampler"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=313408169]
+sprite_frames = SubResource("SpriteFrames_5kqy7")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=767300454]
+shape = SubResource("CircleShape2D_sii8s")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=671362999]
+layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=285419004]
+position = Vector2(67, 62.000008)
+scale = Vector2(3, 3)
+texture = ExtResource("3_sii8s")
+flip_h = true
+hframes = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 124, 33.079025)
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1169908187]
+offset_left = 6.0
+offset_top = 112.0
+offset_right = 368.0
+offset_bottom = 208.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel" unique_id=56555930]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sampler"
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
